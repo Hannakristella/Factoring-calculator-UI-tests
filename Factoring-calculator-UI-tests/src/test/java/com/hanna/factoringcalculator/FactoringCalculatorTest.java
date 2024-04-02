@@ -55,6 +55,21 @@ public class FactoringCalculatorTest {
                 .shouldHave(text("Value must be greater than or equal to 1."));
     }
 
+    @Test
+    public void correctResult() {
+        open("/business/finance/trade/factoring?language=ENG");
+
+        $("[name='calc_d5']").shouldBe(visible, enabled).setValue("10000");
+        $("[name='calc_d6']").shouldBe(visible, enabled).selectOptionByValue("90");
+        $("[name='calc_d7']").shouldBe(visible, enabled).setValue("5");
+        $("[name='calc_d8']").shouldBe(visible, enabled).selectOptionByValue("30");
+        $("[name='calc_d9']").shouldBe(visible, enabled).setValue("0.5");
+
+        $("#calculate-factoring").scrollIntoView(true).click();
+
+        $("#result_perc").shouldHave(text("0.88"));
+        $("#result").shouldHave(text("87.50"));
+    }
 
 
 }
