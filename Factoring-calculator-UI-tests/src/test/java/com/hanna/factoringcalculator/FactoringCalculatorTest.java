@@ -31,7 +31,13 @@ public class FactoringCalculatorTest {
     }
 
     @Test
-    public void enterInvalidData() {
+    public void enterEmtyData() {
+        open("/business/finance/trade/factoring?language=ENG");
+        $("[name='calc_d5']").shouldBe(visible, enabled).setValue("");
+        $("[name='calc_d7']").shouldBe(visible, enabled).setValue("");
+        $("[name='calc_d9']").shouldBe(visible, enabled).setValue("0.3");
+        $("#calculate-factoring").scrollIntoView(true).click();
+        $("ui-hint[type='error'][error-type='valueMissing']").shouldHave(text("Please fill out this field."));
 
     }
 
