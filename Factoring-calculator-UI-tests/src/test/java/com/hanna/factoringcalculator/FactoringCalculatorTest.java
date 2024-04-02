@@ -71,5 +71,14 @@ public class FactoringCalculatorTest {
         $("#result").shouldHave(text("87.50"));
     }
 
+    @Test
+    public void enterInterestRateLessThanZero() {
+        open("/business/finance/trade/factoring?language=ENG");
+
+        $("[name='calc_d7']").shouldBe(visible, enabled).setValue("-8");
+
+        $("ui-hint[error-type='rangeUnderflow']")
+                .shouldHave(text("Value must be greater than or equal 0."));
+    }
 
 }
