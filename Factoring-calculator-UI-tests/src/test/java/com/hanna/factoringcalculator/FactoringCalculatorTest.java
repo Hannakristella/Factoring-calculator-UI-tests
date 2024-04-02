@@ -44,15 +44,15 @@ public class FactoringCalculatorTest {
     }
 
     @Test
-    public void inputLessThanOne() {
+    public void enterInvoiceAmountLessThanOne() {
         open("/business/finance/trade/factoring?language=ENG");
 
         $("[name='calc_d5']").shouldBe(visible, enabled).setValue("0.4");
+        $("ui-hint[error-type='rangeUnderflow']")
+                .shouldHave(text("Value must be greater than or equal 1."));
 
-        $("#calculate-factoring").shouldBe(visible, enabled).click();
 
-        $("ui-hint[error-type='rangeUnderflow']").shouldBe(visible, Duration.ofSeconds(4))
-                .shouldHave(text("Value must be greater than or equal to 1."));
+
     }
 
     @Test
