@@ -6,6 +6,8 @@ import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
+import java.time.Duration;
+
 public class FactoringCalculatorTest {
 
     @BeforeEach
@@ -40,6 +42,19 @@ public class FactoringCalculatorTest {
         $("ui-hint[type='error'][error-type='valueMissing']").shouldHave(text("Please fill out this field."));
 
     }
+
+    @Test
+    public void inputLessThanOne() {
+        open("/business/finance/trade/factoring?language=ENG");
+
+        $("[name='calc_d5']").shouldBe(visible, enabled).setValue("0.4");
+
+        $("#calculate-factoring").shouldBe(visible, enabled).click();
+
+        $("ui-hint[error-type='rangeUnderflow']").shouldBe(visible, Duration.ofSeconds(4))
+                .shouldHave(text("Value must be greater than or equal to 1."));
+    }
+
 
 
 }
