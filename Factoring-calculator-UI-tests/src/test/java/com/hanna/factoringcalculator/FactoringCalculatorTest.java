@@ -2,7 +2,10 @@ package com.hanna.factoringcalculator;
 
 import static com.codeborne.selenide.Selenide.*;
 import static com.codeborne.selenide.Condition.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.SelenideElement;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -100,4 +103,22 @@ public class FactoringCalculatorTest {
 
     }
 
+    @Test
+    public void testResultOverflow() {
+        Configuration.browserSize = "1920x1080";
+        open("/business/finance/trade/factoring?language=ENG");
+
+        $("[name='calc_d5']").scrollIntoView(true).shouldBe(visible, enabled).setValue("1000000000000");
+        $("[name='calc_d6']").scrollIntoView(true).shouldBe(visible, enabled).setValue("80");
+        $("[name='calc_d7']").scrollIntoView(true).shouldBe(visible, enabled).setValue("0.4");
+        $("[name='calc_d8']").scrollIntoView(true).shouldBe(visible, enabled).setValue("30");
+        $("[name='calc_d9']").scrollIntoView(true).shouldBe(visible, enabled).setValue("3");
+
+        $("#calculate-factoring").scrollIntoView(true).shouldBe(visible, enabled).click();
+
+
+        SelenideElement result = $("#result").shouldBe(visible, Duration.ofSeconds(10));
+        boolean isScrollable = executeJavaScript("return arguments[0].scrollWidth > arguments[0].offsetWidth;", result);
+        assertTrue(isScrollable, "The result should be scrollable horizontally.");
+    }
 }
