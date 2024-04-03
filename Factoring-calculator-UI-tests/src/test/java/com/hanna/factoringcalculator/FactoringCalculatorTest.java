@@ -109,16 +109,16 @@ public class FactoringCalculatorTest {
         open("/business/finance/trade/factoring?language=ENG");
 
         $("[name='calc_d5']").scrollIntoView(true).shouldBe(visible, enabled).setValue("1000000000000");
-        $("[name='calc_d6']").scrollIntoView(true).shouldBe(visible, enabled).setValue("80");
+        $("[name='calc_d6']").scrollIntoView(true).shouldBe(visible, enabled).selectOptionByValue("80");
         $("[name='calc_d7']").scrollIntoView(true).shouldBe(visible, enabled).setValue("0.4");
-        $("[name='calc_d8']").scrollIntoView(true).shouldBe(visible, enabled).setValue("30");
+        $("[name='calc_d8']").scrollIntoView(true).shouldBe(visible, enabled).selectOptionByValue("30");
         $("[name='calc_d9']").scrollIntoView(true).shouldBe(visible, enabled).setValue("3");
 
         $("#calculate-factoring").scrollIntoView(true).shouldBe(visible, enabled).click();
 
 
-        SelenideElement result = $("#result").shouldBe(visible, Duration.ofSeconds(10));
-        boolean isScrollable = executeJavaScript("return arguments[0].scrollWidth > arguments[0].offsetWidth;", result);
-        assertTrue(isScrollable, "The result should be scrollable horizontally.");
+        SelenideElement screen = $("body").shouldBe(visible, Duration.ofSeconds(10));
+        boolean isScreenScrollable = executeJavaScript("return arguments[0].scrollWidth > arguments[0].clientWidth;", screen);
+        assertTrue(isScreenScrollable, "The entire screen should be scrollable horizontally.");
     }
 }
